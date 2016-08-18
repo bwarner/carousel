@@ -2,13 +2,16 @@
 @body-width: 200px;
 @slide-width: @image-width + @body-width;
 @button-control-width: 30px;
-@carousel-width: @slide-width + @button-control-width * 2;
-@carousel-height: 500px;
+@carousel-width: @slide-width + @button-control-width * 2 + 30px;
+@carousel-height: 350px;
 
 .carousel {
   display:flex;
   justify-content: center;
   align-items: center;
+  width: @carousel-width;
+}
+.carousel-panel {
   width: @carousel-width;
 }
 .aperture {
@@ -21,7 +24,7 @@
   position: absolute;
   left:0;
   width: 2 * @slide-width;
-  height: 285px;
+  height: @carousel-height;
 }
 .slide {
   font-family: "Times New Roman", Times, serif;
@@ -33,7 +36,6 @@
 }
 .slide.slide-body{
   flex: @body-width;
-  border:1px solid red;
   padding:10px;
 }
 .slide.slide-image {
@@ -44,8 +46,31 @@
   align-items: center;
 }
 .left-side, .right-side {
+  position: absolute;
   margin: 0;
   padding:0;
   width: @slide-width;
-  height: 285px;
+  //height: 285px;
+}
+
+.left-side {
+  left:0px;
+}
+
+.right-side {
+  right: 0px;
+}
+
+.animate {
+  transition: left 200ms, right 200ms;
+}
+
+.left {
+  left: 0px;
+  right: auto;
+}
+
+.right  {
+  right: 0px;
+  left: auto;
 }

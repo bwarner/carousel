@@ -2,19 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 545px;
+  width: 575px;
+}
+.carousel-panel {
+  width: 575px;
 }
 .aperture {
   position: relative;
   overflow: hidden;
   flex: 485px 0 0;
-  height: 500px;
+  height: 350px;
 }
 .slider {
   position: absolute;
   left: 0;
   width: 970px;
-  height: 285px;
+  height: 350px;
 }
 .slide {
   font-family: "Times New Roman", Times, serif;
@@ -26,7 +29,6 @@
 }
 .slide.slide-body {
   flex: 200px;
-  border: 1px solid red;
   padding: 10px;
 }
 .slide.slide-image {
@@ -39,8 +41,25 @@
 }
 .left-side,
 .right-side {
+  position: absolute;
   margin: 0;
   padding: 0;
   width: 485px;
-  height: 285px;
+}
+.left-side {
+  left: 0px;
+}
+.right-side {
+  right: 0px;
+}
+.animate {
+  transition: left 200ms, right 200ms;
+}
+.left {
+  left: 0px;
+  right: auto;
+}
+.right {
+  right: 0px;
+  left: auto;
 }
