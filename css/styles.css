@@ -2,12 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 545px;
 }
 .aperture {
   position: relative;
   overflow: hidden;
   flex: 485px 0 0;
-  height: 285px;
+  height: 500px;
 }
 .slider {
   position: absolute;
@@ -26,6 +27,7 @@
 .slide.slide-body {
   flex: 200px;
   border: 1px solid red;
+  padding: 10px;
 }
 .slide.slide-image {
   flex: 285px;

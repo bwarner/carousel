@@ -1,17 +1,21 @@
 @image-width: 285px;
 @body-width: 200px;
 @slide-width: @image-width + @body-width;
+@button-control-width: 30px;
+@carousel-width: @slide-width + @button-control-width * 2;
+@carousel-height: 500px;
 
 .carousel {
   display:flex;
   justify-content: center;
   align-items: center;
+  width: @carousel-width;
 }
 .aperture {
   position:relative;
   overflow: hidden;
   flex:  @slide-width 0 0;
-  height: 285px;
+  height: @carousel-height;
 }
 .slider {
   position: absolute;
@@ -30,12 +34,13 @@
 .slide.slide-body{
   flex: @body-width;
   border:1px solid red;
+  padding:10px;
 }
 .slide.slide-image {
   flex: @image-width;
 }
 .right-control, .left-control {
-  flex: 30px 1 1;
+  flex: @button-control-width 1 1;
   align-items: center;
 }
 .left-side, .right-side {
