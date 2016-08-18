@@ -1,0 +1,46 @@
+@image-width: 285px;
+@body-width: 200px;
+@slide-width: @image-width + @body-width;
+
+.carousel {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.aperture {
+  position:relative;
+  overflow: hidden;
+  flex:  @slide-width 0 0;
+  height: 285px;
+}
+.slider {
+  position: absolute;
+  left:0;
+  width: 2 * @slide-width;
+  height: 285px;
+}
+.slide {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+}
+.slide.slide-document {
+  display:flex;
+  flex-direction: row;
+}
+.slide.slide-body{
+  flex: @body-width;
+  border:1px solid red;
+}
+.slide.slide-image {
+  flex: @image-width;
+}
+.right-control, .left-control {
+  flex: 30px 1 1;
+  align-items: center;
+}
+.left-side, .right-side {
+  margin: 0;
+  padding:0;
+  width: @slide-width;
+  height: 285px;
+}

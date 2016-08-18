@@ -1,0 +1,44 @@
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aperture {
+  position: relative;
+  overflow: hidden;
+  flex: 485px 0 0;
+  height: 285px;
+}
+.slider {
+  position: absolute;
+  left: 0;
+  width: 970px;
+  height: 285px;
+}
+.slide {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+}
+.slide.slide-document {
+  display: flex;
+  flex-direction: row;
+}
+.slide.slide-body {
+  flex: 200px;
+  border: 1px solid red;
+}
+.slide.slide-image {
+  flex: 285px;
+}
+.right-control,
+.left-control {
+  flex: 30px 1 1;
+  align-items: center;
+}
+.left-side,
+.right-side {
+  margin: 0;
+  padding: 0;
+  width: 485px;
+  height: 285px;
+}
