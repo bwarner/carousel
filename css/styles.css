@@ -1,3 +1,7 @@
+.slide-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+}
 .carousel {
   display: flex;
   justify-content: center;
@@ -12,24 +16,30 @@
   overflow: hidden;
   flex: 485px 0 0;
   height: 350px;
+  outline: 1px solid red;
+  overflow: visible;
+  /* TOOD: remove */
 }
-.slider {
+ul.slider {
+  list-style: none;
   position: absolute;
   left: 0;
   width: 970px;
   height: 350px;
-}
-.slide {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 12px;
+  outline: 1px solid blue;
+  transition: left 1000ms, right 1000ms;
 }
 .slide.slide-document {
   display: flex;
   flex-direction: row;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
 }
 .slide.slide-body {
   flex: 200px;
   padding: 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
 }
 .slide.slide-image {
   flex: 285px;
@@ -38,12 +48,13 @@
 .left-control {
   flex: 30px 1 1;
   align-items: center;
+  z-index: 1000;
 }
 .left-side,
 .right-side {
   position: absolute;
   margin: 0;
-  padding: 0;
+  padding: 5px 10px;
   width: 485px;
 }
 .left-side {
@@ -53,7 +64,7 @@
   right: 0px;
 }
 .animate {
-  transition: left 200ms, right 200ms;
+  transition: left 1000ms, right 1000ms;
 }
 .left {
   left: 0px;

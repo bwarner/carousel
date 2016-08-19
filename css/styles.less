@@ -5,6 +5,11 @@
 @carousel-width: @slide-width + @button-control-width * 2 + 30px;
 @carousel-height: 350px;
 
+.slide-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+}
+
 .carousel {
   display:flex;
   justify-content: center;
@@ -19,36 +24,46 @@
   overflow: hidden;
   flex:  @slide-width 0 0;
   height: @carousel-height;
+  outline: 1px solid red;
+  overflow:visible; /* TOOD: remove */
+
 }
-.slider {
+ul.slider {
+  list-style: none;
   position: absolute;
   left:0;
   width: 2 * @slide-width;
   height: @carousel-height;
+  outline: 1px solid blue;
+  transition: left 1000ms, right 1000ms;
 }
 .slide {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 12px;
+
 }
 .slide.slide-document {
   display:flex;
   flex-direction: row;
+  .slide-text;
 }
+
 .slide.slide-body{
   flex: @body-width;
   padding:10px;
+  .slide-text;
 }
+
 .slide.slide-image {
   flex: @image-width;
 }
 .right-control, .left-control {
   flex: @button-control-width 1 1;
   align-items: center;
+  z-index:1000;
 }
 .left-side, .right-side {
   position: absolute;
   margin: 0;
-  padding:0;
+  padding:5px 10px;
   width: @slide-width;
   //height: 285px;
 }
@@ -62,7 +77,7 @@
 }
 
 .animate {
-  transition: left 200ms, right 200ms;
+  transition: left 1000ms, right 1000ms;
 }
 
 .left {

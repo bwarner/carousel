@@ -5,9 +5,18 @@
     <title>Carousel</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <style>
+<template id="slide-template">
+    <li class="slide left-side">
+        <h5 class="slide slide-title">Loading</h5>
+        <div class="slide slide-document">
+            <div class="slide slide-body">Image Loading></div>
+            <div class="slide slide-image">
+                <img class="slide slide-image-img" src="">
+            </div>
+        </div>
+    </li>
+</template>
 
-    </style>
 </head>
 <body>
 <div>
@@ -23,32 +32,9 @@
                     </div>
                     <div class="panel carousel-panel col-md-10">
                         <div class="aperture">
-                            <div class="slider">
-                                <div class="slide left-side">
-                                    <h3 class="slide slide-title">Loading</h3>
-                                    <div class="slide slide-document">
-                                        <div class="slide slide-body">Image Loading></div>
-                                        <div class="slide slide-image">
-                                            <img src="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="slide right-side">
-                                    <h3 class="slide slide-title"></h3>
-                                    <div class="slide slide-document">
-                                        <div class="slide slide-body"><p>Back pain, especially lower back pain, is an
-                                            ailment that will affect more than 85 percent of Americans at some point.
-                                            For those that suffer from chronic back pain, looking for natural ways to
-                                            alleviate pain is much preferable to living on pain meds. Often, these
-                                            painkillers don’t offer much relief and only treat the symptoms.&nbsp;<span
-                                                    style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 16px;">Change isn't easy, but these simple changes could spell back pain relief. Are the daily activities you partake in causing your back pain to get worse?&nbsp;</span>
-                                        </p></div>
-                                        <div class="slide slide-image">
-                                            <img src="http://www.healthline.com/hlcmsresource/images/slideshow/back_pain_home_remedies/285x285_Back_Pain_1.jpg">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="slider">
+
+                            </ul>
                         </div>
 
                     </div>
@@ -57,6 +43,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <ul>
+                <li id="current"></li>
+            </ul>
         </div>
     </div>
 </div>

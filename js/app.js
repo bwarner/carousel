@@ -2,29 +2,44 @@
  * Created by bwarner on 8/17/16.
  */
 
+function Template(id) {
+    this.templateId = id;
+}
+
+Template.prototype.interpolate = function generate(title, body, imgUrl) {
+    var $template = $(document.querySelector('#slide-template').content);
+    $template.find('.slide .slide-title').text(title);
+    $template.find('.slide .slide-body').html(body);
+    $template.find('.slide .slide-image-img').attr('src', imgUrl);
+    return $template;
+};
     (function(_, $) {
 
-        var CAROUSEL_SELECTOR = ".carousel";
+        var CAROUSEL_SELECTOR = '.carousel';
+
 
         function SlideShow(dataset) {
             this.queue = [];
             this.state = SlideShow.NONE;
             this.current = 0;
+            this.template = new Template('#slide-template');
             this.slides = _.map(dataset.data[0].slides, function(slide, index){
-                var slide =  {body:slide.body, title:slide.title, url:"http://www.healthline.com"+slide.image.imageUrl, index: index};
+                var slide =  {body:slide.body, title:slide.title, url:'http://www.healthline.com'+slide.image.imageUrl, index: index};
                 if (index < 2) {
                     slide.img = new Image();
                     slide.img.src = slide.url;
                 }
                 return slide;
             });
-            if (this.slides.length > 0) {
-                this.loadSlide($(".left-side"), this.slides[this.current]);
-            }
-            $(".slide.slide-left").click($.debounce(250, this.slideLeft.bind(this)));
-            $(".slide.slide-right").click($.debounce(250, this.slideRight.bind(this)));
-            $(".slider").bind("transitionEvent", this.transitionEnd.bind(this));
+            this.slides.forEach(function(slide, index) {
+                this.loadSlide(index);
+            }.bind(this));
+            this.$slider = $('.slider');
 
+            $('.slide.slide-left').click($.debounce(250, this.slideLeft.bind(this)));
+            $('.slide.slide-right').click($.debounce(250, this.slideRight.bind(this)));
+            $('.slider').on('transitionend', this.transitionEnd.bind(this));
+            $('#current').html(this.current);
         }
 
         SlideShow.NONE = 0;
@@ -47,28 +62,30 @@
             }
         };
 
-        SlideShow.prototype.transitionEnd = function() {
+        SlideShow.prototype.transitionEnd = function(e) {
+            console.log('end animation', e);
             if (this.state == SlideShow.SLIDING_LEFT) {
-                this.current --;
-                this.state == SlideShow.NONE;
+                this.current ++;
+                this.state = SlideShow.NONE;
             }
             else if (this.state == SlideShow.SLIDING_RIGHT) {
-                this.current ++;
-                this.state == SlideShow.NONE;
+                this.current --;
+                this.state = SlideShow.NONE;
             }
+            $('#current').html(this.current);
             this.processCommands();
         };
 
         SlideShow.prototype.moveLeft = function() {
-            var slider = $(".slider");
-            slider.css({"left": "0px", "right":"auto"});
-            slider.addClass("animate");
+            this.state = SlideShow.SLIDING_LEFT;
+                var pos = this.current * 100;
+                this.$slider.css({'left': '-' + pos + '%'});
         };
 
         SlideShow.prototype.moveRight = function() {
-            var slider = $(".slider");
-            slider.css({"right": "0px", "left":"auto"});
-            slider.addClass("animate");
+            this.state = SlideShow.SLIDING_RIGHT;
+            var pos = this.current * 100;
+            this.$slider.css({'left': '-' + pos + '%'});
         };
 
         SlideShow.prototype.slideLeft = function() {
@@ -84,14 +101,11 @@
                 this.processCommands();
             }
         };
+        SlideShow.prototype.loadSlide = function(index) {
+            var $slider = $('.slider'),
+                slide = this.slides[index];
 
-        SlideShow.prototype.backup = function() {
-        };
-
-        SlideShow.prototype.loadSlide = function($element, slide) {
-            $element.find(".slide.slide-title").html(slide.title);
-            $element.find(".slide.slide-image img").replaceWith(slide.img);
-            $element.find(".slide.slide-body").replaceWith(slide.body);
+            $slider.append(this.template.interpolate(slide.title, slide.body, slide.url));
         };
 
 
@@ -102,34 +116,37 @@
                 slide = this.slides[start];
                 slide.img = new Image();
                 slide.img.src = slide.url;
-                console.log("img is ", slide.img);
                 start++;
             }
         };
 
         SlideShow.prototype.prepareToSlideLeft = function() {
             this.prefetch();
-            var slider = $(".slider");
-            slider.removeClass("animate");
-            slider.css({"right":"0px","left":"auto"});
-            this.loadSlide($(".left-side"), this.slides[this.current]);
-            this.loadSlide($(".right-side"), this.slides[this.current+1]);
+            // this.loadSlide($('.left-side'), this.slides[this.current]);
+            // setTimeout(function() {
+            //     var slider = $('.slider');
+            //     slider.removeClass('animate');
+            //     slider.css({'left': '0'});
+            // });
+            // this.loadSlide($('.right-side'), this.slides[this.current+1]);
         };
 
 
         SlideShow.prototype.prepareToSlideRight = function() {
             this.prefetch();
-            var slider = $(".slider");
-            slider.removeClass("animate");
-            slider.css({"left":"0px","right":"auto"});
-            this.loadSlide($(".left-side"), this.slides[this.current+1]);
-            this.loadSlide($(".right-side"), this.slides[this.current]);
+            // this.loadSlide($('.right-side'), this.slides[this.current+1]);
+            // setTimeout(function() {
+            //     var slider = $('.slider');
+            //     slider.removeClass('animate');
+            //     slider.css({'left':'-100%'});
+            // });
+            // this.loadSlide($('.left-side'), this.slides[this.current]);
         };
 
-        $.getJSON("https://api.healthline.com/api/service/2.0/slideshow/content?partnerId=7eef498c-f7fa-4f7c-81fd-b1cc53ac7ebc&contentid=17103&includeLang=en&callback=?", null,
+        $.getJSON('https://api.healthline.com/api/service/2.0/slideshow/content?partnerId=7eef498c-f7fa-4f7c-81fd-b1cc53ac7ebc&contentid=17103&includeLang=en&callback=?', null,
             function(dataset) {
                 var slideShow = new SlideShow(dataset);
-                $(".slide.left-control button")
+                $('.slide.left-control button')
             }
         );
 
