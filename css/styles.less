@@ -24,22 +24,24 @@
   overflow: hidden;
   flex:  @slide-width 0 0;
   height: @carousel-height;
-  outline: 1px solid red;
-  overflow:visible; /* TOOD: remove */
+  outline: 1px solid grey;
 
 }
-ul.slider {
-  list-style: none;
+.slider {
+  display: flex;
+  flex-direction: row;
   position: absolute;
   left:0;
-  width: 2 * @slide-width;
+  //width: 100000px; /*2 * @slide-width;*/
   height: @carousel-height;
-  outline: 1px solid blue;
-  transition: left 1000ms, right 1000ms;
+  transition: left 500ms, right 500ms;
 }
-.slide {
 
+.slide-container {
+  flex:@slide-width 0 0;
+  padding:10px;
 }
+
 .slide.slide-document {
   display:flex;
   flex-direction: row;
@@ -48,44 +50,15 @@ ul.slider {
 
 .slide.slide-body{
   flex: @body-width;
-  padding:10px;
   .slide-text;
 }
 
 .slide.slide-image {
   flex: @image-width;
 }
+
 .right-control, .left-control {
   flex: @button-control-width 1 1;
   align-items: center;
   z-index:1000;
-}
-.left-side, .right-side {
-  position: absolute;
-  margin: 0;
-  padding:5px 10px;
-  width: @slide-width;
-  //height: 285px;
-}
-
-.left-side {
-  left:0px;
-}
-
-.right-side {
-  right: 0px;
-}
-
-.animate {
-  transition: left 1000ms, right 1000ms;
-}
-
-.left {
-  left: 0px;
-  right: auto;
-}
-
-.right  {
-  right: 0px;
-  left: auto;
 }

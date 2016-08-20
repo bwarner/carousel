@@ -2,16 +2,38 @@
  * Created by bwarner on 8/17/16.
  */
 
-function Template(id) {
-    this.templateId = id;
+function Slide(title, body, url, index) {
+    this.title = title;
+    this.body = body;
+    this.url = url;
+    this.index = index;
+    this.element = this.createSlideHtml();
 }
 
-Template.prototype.interpolate = function generate(title, body, imgUrl) {
-    var $template = $(document.querySelector('#slide-template').content);
-    $template.find('.slide .slide-title').text(title);
-    $template.find('.slide .slide-body').html(body);
-    $template.find('.slide .slide-image-img').attr('src', imgUrl);
-    return $template;
+Slide.prototype.loadImage = function() {
+   this.image = new Image();
+    this.image.src = this.url;
+};
+
+Slide.prototype.getImage = function() {
+    if (!this.image) {
+        this.image = new Image();
+        this.image.src = this.url;
+    }
+    return this.image;
+};
+
+Slide.prototype.createSlideHtml = function generate() {
+    var template = document.querySelector('#slide-template').content;
+    template.querySelector('.slide.slide-title').textContent = this.title;
+    template.querySelector('.slide.slide-body').innerHTML = this.body;
+    // template.querySelector('.slide.slide-image').setAttribute('src', imgUrl);
+    if (this.image) {
+        template.querySelector('.slide.slide-image  ').appendChild(this.image);
+    }
+    template.querySelector('.slide.slide-container').setAttribute('data-index', this.index);
+
+    return document.importNode(template, true);
 };
     (function(_, $) {
 
@@ -20,75 +42,61 @@ Template.prototype.interpolate = function generate(title, body, imgUrl) {
 
         function SlideShow(dataset) {
             this.queue = [];
-            this.state = SlideShow.NONE;
             this.current = 0;
-            this.template = new Template('#slide-template');
-            this.slides = _.map(dataset.data[0].slides, function(slide, index){
-                var slide =  {body:slide.body, title:slide.title, url:'http://www.healthline.com'+slide.image.imageUrl, index: index};
-                if (index < 2) {
-                    slide.img = new Image();
-                    slide.img.src = slide.url;
-                }
-                return slide;
+            this.fetched = 0;
+            this.slides = _.map(dataset.data[0].slides, function (slide, index) {
+                return new Slide(slide.title, slide.body, 'http://www.healthline.com' + slide.image.imageUrl, index);
             });
-            this.slides.forEach(function(slide, index) {
+            this.$slider = $('.slider');
+            this.$leftButton  = $('.slide.left-control');
+            this.$rightButton = $('.slide.right-control');
+            this.$rightButton.prop('disable', true);
+
+            this.slides.forEach(function (slide, index) {
                 this.loadSlide(index);
             }.bind(this));
-            this.$slider = $('.slider');
+            this.cacheImages(0, 2);
 
-            $('.slide.slide-left').click($.debounce(250, this.slideLeft.bind(this)));
-            $('.slide.slide-right').click($.debounce(250, this.slideRight.bind(this)));
+            $('.slide.slide-left').click($.throttle(250, this.slideLeft.bind(this)));
+            $('.slide.slide-right').click($.throttle(250, this.slideRight.bind(this)));
             $('.slider').on('transitionend', this.transitionEnd.bind(this));
             $('#current').html(this.current);
         }
-
-        SlideShow.NONE = 0;
-        SlideShow.SLIDING_LEFT = 1;
-        SlideShow.SLIDING_RIGHT = 2;
 
         SlideShow.prototype.processCommands = function() {
             if (this.queue.length == 0)
                 return;
             var cmd = this.queue.pop();
-            if (this.state == SlideShow.NONE) {
-                if (cmd.name == 'left') {
-                    this.prepareToSlideLeft(cmd.name);
-                    this.moveLeft();
-                }
-                else if (cmd.name == 'right') {
-                    this.prepareToSlideRight(cmd.name);
-                    this.moveRight();
-                }
+            if (cmd.name == 'left') {
+                this.moveLeft();
+            }
+            else if (cmd.name == 'right') {
+                this.moveRight();
             }
         };
 
         SlideShow.prototype.transitionEnd = function(e) {
-            console.log('end animation', e);
-            if (this.state == SlideShow.SLIDING_LEFT) {
-                this.current ++;
-                this.state = SlideShow.NONE;
-            }
-            else if (this.state == SlideShow.SLIDING_RIGHT) {
-                this.current --;
-                this.state = SlideShow.NONE;
-            }
             $('#current').html(this.current);
+            this.$rightButton.prop('disabled', this.current == 0);
+            this.$rightButton.prop('disabled', this.current + 1 > this.slides.length);
+
             this.processCommands();
         };
 
         SlideShow.prototype.moveLeft = function() {
-            this.state = SlideShow.SLIDING_LEFT;
-                var pos = this.current * 100;
-                this.$slider.css({'left': '-' + pos + '%'});
+            this.current ++;
+            var pos = this.current * 100 ;
+            this.$slider.css({'left': '-' + pos + '%'});
         };
 
         SlideShow.prototype.moveRight = function() {
-            this.state = SlideShow.SLIDING_RIGHT;
+            this.current --;
             var pos = this.current * 100;
             this.$slider.css({'left': '-' + pos + '%'});
         };
 
         SlideShow.prototype.slideLeft = function() {
+            this.prefetch();
             if (this.current+1 < this.slides.length) {
                 this.queue.push({name: 'left'});
                 this.processCommands();
@@ -102,45 +110,23 @@ Template.prototype.interpolate = function generate(title, body, imgUrl) {
             }
         };
         SlideShow.prototype.loadSlide = function(index) {
-            var $slider = $('.slider'),
-                slide = this.slides[index];
-
-            $slider.append(this.template.interpolate(slide.title, slide.body, slide.url));
+            this.$slider.append(this.slides[index].createSlideHtml());
         };
 
-
-        SlideShow.prototype.prefetch = function() {
-            var slide, start = this.current + 2,
-                end = Math.min(start+2, this.slides.length);
+        SlideShow.prototype.cacheImages = function(start, len) {
+            var end = Math.min(start+len, this.slides.length);
             while (start < end) {
-                slide = this.slides[start];
-                slide.img = new Image();
-                slide.img.src = slide.url;
+                var slide = this.slides[start];
+                var $element = $('.slide.slide-container[data-index='+start+'] .slide-image');
+                if ($element  && $element.children().length == 0) {
+                    $element.append(slide.getImage());
+                }
                 start++;
             }
         };
 
-        SlideShow.prototype.prepareToSlideLeft = function() {
-            this.prefetch();
-            // this.loadSlide($('.left-side'), this.slides[this.current]);
-            // setTimeout(function() {
-            //     var slider = $('.slider');
-            //     slider.removeClass('animate');
-            //     slider.css({'left': '0'});
-            // });
-            // this.loadSlide($('.right-side'), this.slides[this.current+1]);
-        };
-
-
-        SlideShow.prototype.prepareToSlideRight = function() {
-            this.prefetch();
-            // this.loadSlide($('.right-side'), this.slides[this.current+1]);
-            // setTimeout(function() {
-            //     var slider = $('.slider');
-            //     slider.removeClass('animate');
-            //     slider.css({'left':'-100%'});
-            // });
-            // this.loadSlide($('.left-side'), this.slides[this.current]);
+        SlideShow.prototype.prefetch = function() {
+            this.cacheImages(this.current + 2 + this.current % 2, 2);
         };
 
         $.getJSON('https://api.healthline.com/api/service/2.0/slideshow/content?partnerId=7eef498c-f7fa-4f7c-81fd-b1cc53ac7ebc&contentid=17103&includeLang=en&callback=?', null,

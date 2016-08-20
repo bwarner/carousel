@@ -16,18 +16,19 @@
   overflow: hidden;
   flex: 485px 0 0;
   height: 350px;
-  outline: 1px solid red;
-  overflow: visible;
-  /* TOOD: remove */
+  outline: 1px solid grey;
 }
-ul.slider {
-  list-style: none;
+.slider {
+  display: flex;
+  flex-direction: row;
   position: absolute;
   left: 0;
-  width: 970px;
   height: 350px;
-  outline: 1px solid blue;
-  transition: left 1000ms, right 1000ms;
+  transition: left 500ms, right 500ms;
+}
+.slide-container {
+  flex: 485px 0 0;
+  padding: 10px;
 }
 .slide.slide-document {
   display: flex;
@@ -37,7 +38,6 @@ ul.slider {
 }
 .slide.slide-body {
   flex: 200px;
-  padding: 10px;
   font-family: "Times New Roman", Times, serif;
   font-size: 12px;
 }
@@ -49,28 +49,4 @@ ul.slider {
   flex: 30px 1 1;
   align-items: center;
   z-index: 1000;
-}
-.left-side,
-.right-side {
-  position: absolute;
-  margin: 0;
-  padding: 5px 10px;
-  width: 485px;
-}
-.left-side {
-  left: 0px;
-}
-.right-side {
-  right: 0px;
-}
-.animate {
-  transition: left 1000ms, right 1000ms;
-}
-.left {
-  left: 0px;
-  right: auto;
-}
-.right {
-  right: 0px;
-  left: auto;
 }

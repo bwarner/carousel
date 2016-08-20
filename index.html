@@ -5,17 +5,16 @@
     <title>Carousel</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-<template id="slide-template">
-    <li class="slide left-side">
-        <h5 class="slide slide-title">Loading</h5>
-        <div class="slide slide-document">
-            <div class="slide slide-body">Image Loading></div>
-            <div class="slide slide-image">
-                <img class="slide slide-image-img" src="">
+    <template id="slide-template">
+        <div class="slide slide-container">
+            <h5 class="slide slide-title">Loading</h5>
+            <div class="slide slide-document">
+                <div class="slide slide-body">Image Loading></div>
+                <div class="slide slide-image">
+                </div>
             </div>
         </div>
-    </li>
-</template>
+    </template>
 
 </head>
 <body>
@@ -27,19 +26,19 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-12">
                 <div class="carousel">
-                    <div class="left-control">
-                        <button class="slide slide-left glyphicon glyphicon-chevron-left"></button>
+                    <div class="slide left-control">
+                        <button class="btn slide slide-left glyphicon glyphicon-chevron-left"></button>
                     </div>
                     <div class="panel carousel-panel col-md-10">
                         <div class="aperture">
-                            <ul class="slider">
+                            <div class="slider">
 
-                            </ul>
+                            </div>
                         </div>
 
                     </div>
-                    <div class="right-control">
-                        <button class="slide slide-right glyphicon glyphicon-chevron-right"></button>
+                    <div class="slide right-control">
+                        <button class="btn slide slide-right glyphicon glyphicon-chevron-right"></button>
                     </div>
                 </div>
             </div>
