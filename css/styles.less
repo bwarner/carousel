@@ -14,7 +14,6 @@
   display:flex;
   justify-content: center;
   align-items: center;
-  width: @carousel-width;
 }
 .carousel-panel {
   width: @carousel-width;
@@ -22,7 +21,7 @@
 .aperture {
   position:relative;
   overflow: hidden;
-  flex:  @slide-width 0 0;
+  width:  @slide-width;
   height: @carousel-height;
   outline: 1px solid grey;
 
@@ -32,7 +31,6 @@
   flex-direction: row;
   position: absolute;
   left:0;
-  //width: 100000px; /*2 * @slide-width;*/
   height: @carousel-height;
   transition: left 500ms, right 500ms;
 }

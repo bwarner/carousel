@@ -6,7 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 575px;
 }
 .carousel-panel {
   width: 575px;
@@ -14,7 +13,7 @@
 .aperture {
   position: relative;
   overflow: hidden;
-  flex: 485px 0 0;
+  width: 485px;
   height: 350px;
   outline: 1px solid grey;
 }

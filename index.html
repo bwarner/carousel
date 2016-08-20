@@ -24,40 +24,59 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 col-sm-12">
+            <div class="col-md-5 col-md-offset-3 col-sm-12">
                 <div class="carousel">
-                    <div class="slide left-control">
+                    <div class="left-control">
                         <button class="btn slide slide-left glyphicon glyphicon-chevron-left"></button>
                     </div>
                     <div class="panel carousel-panel col-md-10">
                         <div class="aperture">
-                            <div class="slider">
-
-                            </div>
+                            <div class="slide slider"></div>
                         </div>
-
                     </div>
-                    <div class="slide right-control">
+                    <div class="right-control">
                         <button class="btn slide slide-right glyphicon glyphicon-chevron-right"></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <ul>
-                <li id="current"></li>
-            </ul>
+            <div class="col-md-offset-3 col-md-5 text-center">
+                <form action="">
+                    <div class="radio">
+                        <label>
+                            <input class="slide slide-radio" type="radio" name="slideSorter" id="sortDefault"
+                                   value="default" checked>
+                            Default Sort Order
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input class="slide slide-radio" type="radio" name="slideSorter" id="sortAlpha"
+                                   value="alpha">
+                            Sort alpha numerically
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="bg-info col-md-offset-3 col-md-5 text-center">
+                <label>Page <span id="current"></span></label>
+            </div>
+        </div>
+        <div class="row">
+            <img id="tracking" src="">
         </div>
     </div>
 </div>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
+<script src="https://code.jquery.com/jquery-3.1.0.js"
+        integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
         crossorigin="anonymous"></script>
 <script src="js/jquery.ba-throttle-debounce.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/app.js"></script>
-
+</div>
 </body>
 </html>
