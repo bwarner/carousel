@@ -4,48 +4,73 @@
 }
 .carousel {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin: auto;
+  width: 605px;
 }
 .carousel-panel {
-  width: 575px;
+  width: 505px;
 }
 .aperture {
   position: relative;
   overflow: hidden;
-  width: 485px;
+  margin: 0 50px;
+  width: 505px;
   height: 350px;
   outline: 1px solid grey;
 }
 .slider {
-  display: flex;
-  flex-direction: row;
   position: absolute;
   left: 0;
+  width: 100000px;
   height: 350px;
   transition: left 500ms, right 500ms;
 }
 .slide-container {
-  flex: 485px 0 0;
+  width: 505px;
   padding: 10px;
+  float: left;
 }
 .slide.slide-document {
-  display: flex;
-  flex-direction: row;
   font-family: "Times New Roman", Times, serif;
   font-size: 12px;
 }
 .slide.slide-body {
-  flex: 200px;
+  width: 200px;
   font-family: "Times New Roman", Times, serif;
   font-size: 12px;
+  float: left;
 }
 .slide.slide-image {
-  flex: 285px;
+  width: 285px;
+  float: left;
 }
 .right-control,
 .left-control {
-  flex: 30px 1 1;
-  align-items: center;
+  width: 50px;
   z-index: 1000;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  text-align: center;
+}
+
+.right-control .btn,
+.left-control .btn {
+  top: 45%;
+}
+
+.right-control {
+  right: 0;
+}
+
+.left-control {
+  left: 0;
+}
+
+.stats {
+  margin: auto;
+  width: 605px;
+  text-align: center;
 }

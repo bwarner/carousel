@@ -1,8 +1,8 @@
 @image-width: 285px;
 @body-width: 200px;
-@slide-width: @image-width + @body-width;
-@button-control-width: 30px;
-@carousel-width: @slide-width + @button-control-width * 2 + 30px;
+@slide-width: @image-width + @body-width + 20px;
+@button-control-width: 50px;
+@carousel-width: @slide-width + @button-control-width * 2;
 @carousel-height: 350px;
 
 .slide-text {
@@ -12,51 +12,80 @@
 
 .carousel {
   display:flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin: auto;
+  width: @carousel-width;
 }
 .carousel-panel {
-  width: @carousel-width;
+  width: @slide-width;
 }
 .aperture {
   position:relative;
   overflow: hidden;
+  margin: 0 @button-control-width;
   width:  @slide-width;
   height: @carousel-height;
   outline: 1px solid grey;
 
 }
 .slider {
-  display: flex;
-  flex-direction: row;
   position: absolute;
   left:0;
+  width: 100000px;
   height: @carousel-height;
   transition: left 500ms, right 500ms;
 }
 
 .slide-container {
-  flex:@slide-width 0 0;
+  width: @slide-width;
   padding:10px;
+  float: left;
 }
 
 .slide.slide-document {
-  display:flex;
-  flex-direction: row;
+
   .slide-text;
 }
 
 .slide.slide-body{
-  flex: @body-width;
+  //flex: @body-width;
+  width: @body-width;
   .slide-text;
+  float: left;
+
 }
 
 .slide.slide-image {
-  flex: @image-width;
+  //flex: @image-width;
+  width: @image-width;
+  float: left;
+
 }
 
 .right-control, .left-control {
-  flex: @button-control-width 1 1;
-  align-items: center;
+  width: @button-control-width;
   z-index:1000;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  text-align: center;
+  .btn {
+    top: 45%;
+  }
+}
+
+.right-control {
+  right: 0;
+}
+
+.left-control {
+  left: 0;
+
+}
+
+.stats {
+  margin: auto;
+  width: @carousel-width;
+  text-align: center;
 }
